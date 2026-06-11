@@ -1,15 +1,14 @@
 package com.crudnosql.nosql.c;
 import com.crudnosql.nosql.objects.Usuario;
 import com.crudnosql.nosql.r.UsuarioRepo;
+import lombok.RequiredArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+@RequiredArgsConstructor
 @Service
 public class UsuarioController {
-    @Autowired
-    private UsuarioRepo usuarioRepo;
+    private final UsuarioRepo usuarioRepo;
     public List<Usuario> fAll(){return usuarioRepo.findAll();
     }
     public Usuario getBYcpf(String cpf) {return usuarioRepo.findById(cpf).orElse(null);}
