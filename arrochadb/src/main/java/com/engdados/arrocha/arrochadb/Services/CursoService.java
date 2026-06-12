@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class CursoService {
     private final CursoRepository cursoBala;
-    void botaCurso(String nome, Grau grau, Turno turno, String campus, Nivel nivel) throws Exception{
+    public void botaCurso(String nome, Grau grau, Turno turno, String campus, Nivel nivel) throws Exception{
         if (cursoBala.existsByNome(nome)){
             throw new Exception("Tira que eu vou cagar");
         }
@@ -27,10 +27,10 @@ public class CursoService {
 
         cursoBala.save(otoCurso);
     }
-    List<Curso> macroCaca(){return cursoBala.findAll();} // macroCaca = caçar tudo no repo
-    Curso cacaId(Long id){return cursoBala.findById(id).orElse(null);}
+    public List<Curso> macroCaca(){return cursoBala.findAll();} // macroCaca = caçar tudo no repo
+    public Curso cacaId(Long id){return cursoBala.findById(id).orElse(null);}
     
-    void upCurso(Long id, String nNome, Grau nGrau, Turno nTurno, String nCampus, Nivel nNivel) throws Exception{
+    public void upCurso(Long id, String nNome, Grau nGrau, Turno nTurno, String nCampus, Nivel nNivel) throws Exception{
         Curso cursoAtual = cacaId(id);
         if (cursoAtual == null){
             throw new Exception("Cabrunco tá oco");            
@@ -42,7 +42,7 @@ public class CursoService {
         cursoAtual.setNivel(nNivel);
         cursoBala.save(cursoAtual);
     }
-    void neutrofilo(Long id){
+    public void neutrofilo(Long id){
         if (cursoBala.existsById(id)){
             cursoBala.deleteById(id);
         }
