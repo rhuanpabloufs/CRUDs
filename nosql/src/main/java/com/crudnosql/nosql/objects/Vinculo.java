@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 public class Vinculo {
     @Id
     private String id;
-    private String mat_estudante;
+    private String matEstudante;
     private String curso;
-    private LocalDateTime data_entrada;
+    private LocalDateTime dataEntrada;
     private String status;
-    private LocalDateTime data_saida;
+    private LocalDateTime dataSaida;
 }

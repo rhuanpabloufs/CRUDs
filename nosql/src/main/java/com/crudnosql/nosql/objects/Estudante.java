@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 public class Estudante {
     @Id
     private String cpf;
-    private String mat_estudante;
+    private String matEstudante;
     private double mc;
-    private int ano_ingresso;
+    private int anoIngresso;
     
 }

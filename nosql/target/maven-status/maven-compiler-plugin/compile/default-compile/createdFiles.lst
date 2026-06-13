@@ -1,0 +1,13 @@
+com\crudnosql\nosql\c\CursoService.class
+com\crudnosql\nosql\objects\Usuario.class
+com\crudnosql\nosql\r\VinculoRepo.class
+com\crudnosql\nosql\c\VinculoService.class
+com\crudnosql\nosql\objects\Estudante.class
+com\crudnosql\nosql\c\EstudanteController.class
+com\crudnosql\nosql\NosqlApplication.class
+com\crudnosql\nosql\r\UsuarioRepo.class
+com\crudnosql\nosql\objects\Vinculo.class
+com\crudnosql\nosql\r\EstudanteRepo.class
+com\crudnosql\nosql\r\CursoRepo.class
+com\crudnosql\nosql\c\UsuarioController.class
+com\crudnosql\nosql\objects\Curso.class
