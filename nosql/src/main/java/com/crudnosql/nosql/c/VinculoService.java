@@ -6,6 +6,8 @@ import javax.management.RuntimeErrorException;
 
 import org.springframework.stereotype.Service;
 import com.crudnosql.nosql.objects.Vinculo;
+import com.crudnosql.nosql.r.CursoRepo;
+import com.crudnosql.nosql.r.EstudanteRepo;
 import com.crudnosql.nosql.r.VinculoRepo;
 import lombok.RequiredArgsConstructor;
 @Service
@@ -21,12 +23,13 @@ public class VinculoService {
     public List<Vinculo> getCurso(String idCurso){
         return vRepo.findByCurso(idCurso);
     }
-    public void addVinculo(String mat_estudante, String curso, LocalDateTime dataEntrada, LocalDateTime dataSaida, String status){
+    public void addVinculo(String mat_estudante, String curso, LocalDateTime dataEntrada, LocalDateTime dataSaida, String status, CursoRepo c, EstudanteRepo e){
         if(vRepo.existsByMatEstudante(mat_estudante)){
             throw new RuntimeErrorException(null);
+        } else if(c.existsById(curso) && e.existsByMatEstudante(mat_estudante)){
+            Vinculo v = new Vinculo(null, mat_estudante, curso, dataEntrada, status, dataSaida);
+            vRepo.save(v);
         }
-        Vinculo v = new Vinculo(null, mat_estudante, curso, dataEntrada, status, dataSaida);
-        vRepo.save(v);
     }
     public void updateVinculoCurso(String matEstudante, String novoCurso) {
         Vinculo v = vRepo.findByMatEstudante(matEstudante);
