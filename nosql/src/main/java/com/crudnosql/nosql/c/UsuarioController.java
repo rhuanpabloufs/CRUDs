@@ -1,6 +1,8 @@
 package com.crudnosql.nosql.c;
 import com.crudnosql.nosql.objects.Usuario;
+import com.crudnosql.nosql.r.EstudanteRepo;
 import com.crudnosql.nosql.r.UsuarioRepo;
+import com.crudnosql.nosql.objects.Estudante;
 import lombok.RequiredArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -62,9 +64,14 @@ public class UsuarioController {
             usuarioRepo.save(u);
         }
     }
-    public void deleteCPF(String cpf){
+    public void deleteCPF(String cpf, EstudanteRepo e){
         if (usuarioRepo.existsById(cpf)) {
-        usuarioRepo.deleteById(cpf);
+            usuarioRepo.deleteById(cpf);
+        }
+        if(e.existsByCpf(cpf)){
+            Estudante u = e.findByCpf(cpf);
+            u.setCpf(null);
+            e.save(u);
         }
     }
     public void deleteLogin(String login){

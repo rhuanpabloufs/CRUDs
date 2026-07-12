@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @Document(collection = "estudante")
 public class Estudante {
     @Id
-    private String cpf;
     private String matEstudante;
+    private String cpf;
     private double mc;
     private int anoIngresso;
     

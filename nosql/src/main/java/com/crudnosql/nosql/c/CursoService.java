@@ -5,7 +5,10 @@ import javax.management.RuntimeErrorException;
 
 import org.springframework.stereotype.Service;
 import com.crudnosql.nosql.objects.Curso;
+import com.crudnosql.nosql.objects.Vinculo;
 import com.crudnosql.nosql.r.CursoRepo;
+import com.crudnosql.nosql.r.VinculoRepo;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -75,8 +78,15 @@ public class CursoService {
         }
     }
 
-    public void deleteById(String id) {
+    public void deleteById(String id, VinculoRepo v) {
         cursoRepo.deleteById(id);
+        if(v.existsByCurso(id)){
+            List<Vinculo> l = v.findByCurso(id);
+            for(Vinculo c : l){
+                c.setCurso(null);
+            }
+            
+        }
     }
 
     public void deleteByNome(String nome) {

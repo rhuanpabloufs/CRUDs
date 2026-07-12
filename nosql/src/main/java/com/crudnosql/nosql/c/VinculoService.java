@@ -26,7 +26,7 @@ public class VinculoService {
     public void addVinculo(String mat_estudante, String curso, LocalDateTime dataEntrada, LocalDateTime dataSaida, String status, CursoRepo c, EstudanteRepo e){
         if(vRepo.existsByMatEstudante(mat_estudante)){
             throw new RuntimeErrorException(null);
-        } else if(c.existsById(curso) && e.existsByMatEstudante(mat_estudante)){
+        } else if(c.existsById(curso) && e.existsById(mat_estudante)){
             Vinculo v = new Vinculo(null, mat_estudante, curso, dataEntrada, status, dataSaida);
             vRepo.save(v);
         }
