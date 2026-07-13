@@ -23,6 +23,8 @@ public class EstudanteController {
         } else if(u.existsById(cpf)){
             Estudante e = new Estudante(cpf, mat_estudante, mc, ano_ingresso);
             eRepo.save(e);
+        } else {
+            throw new Exception("Messi careca");
         }
     }
     public void uptadeMC(double mc, String mat){
@@ -44,5 +46,8 @@ public class EstudanteController {
     }
     public void deleteYear(int ano){
         eRepo.deleteByAnoIngresso(ano);
+    }
+    public EstudanteRepo geteRepo() {
+        return eRepo;
     }
 }

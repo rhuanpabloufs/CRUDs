@@ -79,4 +79,7 @@ public class UsuarioController {
             usuarioRepo.deleteByLogin(login);
         }
     }
+    public UsuarioRepo getUsuarioRepo() {
+        return usuarioRepo;
+    }
 }

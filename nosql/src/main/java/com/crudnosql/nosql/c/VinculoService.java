@@ -70,5 +70,8 @@ public class VinculoService {
     public void deleteByMat_Estudante(String m){
         vRepo.deleteByMatEstudante(m);
     }
+    public VinculoRepo getvRepo() {
+        return vRepo;
+    }
 }
 

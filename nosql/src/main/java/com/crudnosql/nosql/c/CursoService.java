@@ -92,4 +92,7 @@ public class CursoService {
     public void deleteByNome(String nome) {
         cursoRepo.deleteByNome(nome);
     }
+    public CursoRepo getCursoRepo() {
+        return cursoRepo;
+    }
 }
