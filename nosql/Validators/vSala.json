@@ -1,0 +1,13 @@
+{
+    $jsonSchema: {
+        bsonType: "object",
+        required: [
+            "descricao"
+        ],
+        properties: {
+            descricao: {
+                bsonType: ["string","null"]
+            }
+        }
+    }
+}

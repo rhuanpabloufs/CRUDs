@@ -1,0 +1,61 @@
+{
+  $jsonSchema: {
+    bsonType: 'object',
+    required: [
+      '_id',
+      'nome',
+      'dataNascimento',
+      'email',
+      'telefone',
+      'login',
+      'senha'
+    ],
+    properties: {
+      _id: {
+        bsonType: 'string'
+      },
+      nome: {
+        bsonType: 'string',
+        maxLength: 100
+      },
+      dataNascimento: {
+        bsonType: [
+          'date',
+          'null'
+        ]
+      },
+      email: {
+        bsonType: 'array',
+        items: {
+          bsonType: [
+            'string',
+            'null'
+          ]
+        }
+      },
+      telefone: {
+        bsonType: 'array',
+        items: {
+          bsonType: [
+            'string',
+            'null'
+          ]
+        }
+      },
+      login: {
+        bsonType: [
+          'string',
+          'null'
+        ],
+        maxLength: 45
+      },
+      senha: {
+        bsonType: [
+          'string',
+          'null'
+        ],
+        maxLength: 32
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  $jsonSchema: {
+    bsonType: "object",
+    required: [
+      "_id",
+      "cpf",
+      "mc",
+      "anoIngresso"
+    ],
+    properties: {
+      _id: {
+        bsonType: "string",
+        description: "Matricula do estudante"
+      },
+      cpf: {
+        bsonType: "string"
+      },
+      mc: {
+        bsonType: [
+          "double",
+          "null"
+        ],
+        maximum: 10.0
+      },
+      anoIngresso: {
+        bsonType: [
+          "int",
+          "null"
+        ]
+      }
+    }
+  }
+}

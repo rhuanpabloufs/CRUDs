@@ -1,0 +1,23 @@
+{
+    $jsonSchema: {
+        bsonType: "object",
+        required: [
+            "mat_professor",
+            "mat_estudante",
+            "ano"
+        ],
+        properties: {
+            mat_professor: {
+                bsonType: ["string","null"],
+                maxLength: 7
+            },            
+            mat_estudante: {
+                bsonType: ["string","null"],
+                maxLength: 7
+            },
+            ano: {
+                bsonType: ["int","null"]
+            }
+        }
+    }
+}

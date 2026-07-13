@@ -1,0 +1,25 @@
+{
+    $jsonSchema: {
+        bsonType: "object",
+        required: [
+            "ano",
+            "semestre",
+            "data_inicio",
+            "data_fim"
+        ],
+        properties: {
+            ano: {
+                bsonType: "int"
+            },
+            semestre: {
+                bsonType: "int"
+            },
+            data_inicio: {
+                bsonType: ["date", "null"]
+            },
+            data_fim: {
+                bsonType: ["date", "null"]
+            }
+        }
+    }
+}

@@ -1,0 +1,41 @@
+{
+  $jsonSchema: {
+    bsonType: 'object',
+    required: [
+      'matEstudante',
+      'curso',
+      'dataEntrada',
+      'status',
+      'dataSaida'
+    ],
+    properties: {
+      matEstudante: {
+        bsonType: 'string'
+      },
+      curso: {
+        bsonType: 'string'
+      },
+      dataEntrada: {
+        bsonType: [
+          'date',
+          'null'
+        ]
+      },
+      status: {
+        bsonType: 'string',
+        'enum': [
+          'Ativo',
+          'Cancelada',
+          'Formando',
+          'Graduado'
+        ]
+      },
+      dataSaida: {
+        bsonType: [
+          'date',
+          'null'
+        ]
+      }
+    }
+  }
+}

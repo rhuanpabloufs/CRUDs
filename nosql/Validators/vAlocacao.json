@@ -1,0 +1,21 @@
+{
+    $jsonSchema: {
+        bsonType: "object",
+        required: [
+            "id_turma",
+            "id_sala",
+            "id_horario"
+        ],
+        properties: {
+            id_turma: {
+                bsonType: "string"
+            },
+            id_sala: {
+                bsonType: ["string","null"]
+            },
+            id_horario: {
+                bsonType: "string"
+            }
+        }
+    }
+}

@@ -1,0 +1,53 @@
+{
+  $jsonSchema: {
+    bsonType: "object",
+    required: [
+      "_id",
+      "cpf",
+      "departamento",
+      "dataAdmissao",
+      "formacao",
+      "tipo_jornada_trabalho",
+      "salario"
+    ],
+    properties: {
+      _id: {
+        bsonType: "string",
+        description: "Matrícula do professor"
+      },
+      cpf: {
+        bsonType: "string",
+        pattern: "^\\d{13}$"
+      },
+      departamento: {
+        bsonType: ["string", "null"],
+        maxLength: 5
+      },
+      dataAdmissao: {
+        bsonType: ["date", "null"]
+      },
+      formacao: {
+        bsonType: ["string", "null"],
+        enum: [
+          "Graduação",
+          "Especialização",
+          "Mestrado",
+          "Doutorado",
+          null
+        ]
+      },
+      tipo_jornada_trabalho: {
+        bsonType: ["string", "null"],
+        enum: [
+          "20h",
+          "40h",
+          "DE",
+          null
+        ]
+      },
+      salario: {
+        bsonType: ["double", "null"]
+      }
+    }
+  }
+}

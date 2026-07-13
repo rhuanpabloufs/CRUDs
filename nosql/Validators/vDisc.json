@@ -1,0 +1,35 @@
+{
+    $jsonSchema: {
+        bsonType: "object",
+        required: [
+            "_id",
+            "nome",
+            "pre_req",
+            "creditos",
+            "depto_responsavel"
+        ],
+        properties: {
+            _id: {
+                bsonType: "string",
+                maxLength: 8
+            },            
+            nome: {
+                bsonType: "string",
+                maxLength: 40
+            },
+            pre_req: {
+                bsonType: ["string", null]
+                maxLength: 8
+            },
+            creditos: {
+                bsonType: ["int","null"],
+                minimum: 1,
+                maximum: 11
+            },
+            depto_responsavel: {
+                bsonType: ["string","null"],
+                maxLength: 5
+            }
+        }
+    }
+}

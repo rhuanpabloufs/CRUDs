@@ -1,0 +1,26 @@
+{
+    $jsonSchema: {
+        bsonType: "object",
+        required: [
+            "cod_disc",
+            "numero",
+            "ano",
+            "semestre"
+        ],
+        properties: {
+            cod_disc: {
+                bsonType: "string",
+                maxLength: 8
+            },
+            numero: {
+                bsonType: ["int","null"]
+            },
+            ano: {
+                bsonType: ["int","null"]
+            },
+            semestre: {
+                bsonType: ["int","null"]
+            }
+        }
+    }
+}
