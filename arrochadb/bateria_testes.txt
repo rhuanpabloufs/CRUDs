@@ -1,0 +1,152 @@
+================================================================
+#### BATERIA DE TESTES
+
+
+########################  USUARIO  ########################
+
+--- CREATE ---
+curl -X POST http://localhost:8081/usuario -H "Content-Type: application/json" -d "{\"cpf\": 12345678901, \"nome\": \"Joao Silva\", \"login\": \"joaotest\", \"senha\": \"123\", \"email\": [\"joao@email.com\"], \"telefone\": [\"79999998888\"]}"
+
+--- READ todos ---
+curl http://localhost:8081/usuario
+
+--- READ por id ---
+curl http://localhost:8081/usuario/12345678901
+
+--- UPDATE ---
+curl -X PUT http://localhost:8081/usuario/12345678901 -H "Content-Type: application/json" -d "{\"nome\": \"Joao Atualizado\", \"email\": [\"joao@email.com\", \"novo@email.com\"]}"
+curl http://localhost:8081/usuario/12345678901
+
+--- DELETE ---
+curl -X DELETE http://localhost:8081/usuario/12345678901
+
+--- HANDLER 404 ---
+curl http://localhost:8081/usuario/00000000000
+
+--- HANDLER 409 (login duplicado - rode os 2) ---
+curl -X POST http://localhost:8081/usuario -H "Content-Type: application/json" -d "{\"cpf\": 11111111111, \"nome\": \"Dup\", \"login\": \"repetido\", \"senha\": \"1\"}"
+curl -X POST http://localhost:8081/usuario -H "Content-Type: application/json" -d "{\"cpf\": 22222222222, \"nome\": \"Dup2\", \"login\": \"repetido\", \"senha\": \"1\"}"
+
+--- HANDLER 400 (campo obrigatorio faltando) ---
+curl -X POST http://localhost:8081/usuario -H "Content-Type: application/json" -d "{\"cpf\": 33333333333, \"login\": \"semnome\", \"senha\": \"1\"}"
+
+--- HANDLER 400 (JSON malformado) ---
+curl -X POST http://localhost:8081/usuario -H "Content-Type: application/json" -d "{\"cpf\": 44444444444, \"nome\": \"X\" "
+
+
+########################  CURSO  ########################
+# valores de enum EXATOS do banco. Se o banco tem espaco use "Licenciatura Plena";
+# se tem underscore use "Licenciatura_Plena". Ajuste conforme seu dump.
+
+--- CREATE (valor simples) ---
+curl -X POST http://localhost:8081/cursos -H "Content-Type: application/json" -d "{\"nome\": \"Teste CC\", \"grau\": \"Bacharelado\", \"turno\": \"Vespertino\", \"campus\": \"Sao Cristovao\", \"nivel\": \"Graduação\"}"
+
+--- CREATE (valor com espaco - caso dificil) ---
+curl -X POST http://localhost:8081/cursos -H "Content-Type: application/json" -d "{\"nome\": \"Teste Lic\", \"grau\": \"Licenciatura Plena\", \"turno\": \"Turno Indefinido\", \"campus\": \"Itabaiana\", \"nivel\": \"Lato\"}"
+
+--- READ todos ---
+curl http://localhost:8081/cursos
+
+--- READ por id (ajuste) ---
+curl http://localhost:8081/cursos/6
+
+--- UPDATE parcial (so campus) ---
+curl -X PUT http://localhost:8081/cursos/6 -H "Content-Type: application/json" -d "{\"campus\": \"Aracaju\"}"
+curl http://localhost:8081/cursos/6
+
+--- UPDATE enum (troca turno) ---
+curl -X PUT http://localhost:8081/cursos/6 -H "Content-Type: application/json" -d "{\"turno\": \"Noturno\"}"
+curl http://localhost:8081/cursos/6
+
+--- DELETE ---
+curl -X DELETE http://localhost:8081/cursos/6
+
+--- HANDLER 404 ---
+curl http://localhost:8081/cursos/9999
+
+--- HANDLER 409 (combinacao duplicada - rode os 2) ---
+curl -X POST http://localhost:8081/cursos -H "Content-Type: application/json" -d "{\"nome\": \"Repetido\", \"grau\": \"Bacharelado\", \"turno\": \"Matutino\", \"campus\": \"Lagarto\", \"nivel\": \"Graduação\"}"
+curl -X POST http://localhost:8081/cursos -H "Content-Type: application/json" -d "{\"nome\": \"Repetido\", \"grau\": \"Bacharelado\", \"turno\": \"Matutino\", \"campus\": \"Lagarto\", \"nivel\": \"Graduação\"}"
+
+--- HANDLER 400 (nome vazio) ---
+curl -X POST http://localhost:8081/cursos -H "Content-Type: application/json" -d "{\"nome\": \"\", \"grau\": \"Bacharelado\", \"turno\": \"Vespertino\", \"campus\": \"X\", \"nivel\": \"Lato\"}"
+
+--- HANDLER 400/integridade (enum invalido - banco rejeita) ---
+curl -X POST http://localhost:8081/cursos -H "Content-Type: application/json" -d "{\"nome\": \"Y\", \"grau\": \"Bacharelado\", \"turno\": \"NaoExiste\", \"campus\": \"X\", \"nivel\": \"Lato\"}"
+
+
+########################  ESTUDANTE  ########################
+
+--- pre: cria usuario pro estudante ---
+curl -X POST http://localhost:8081/usuario -H "Content-Type: application/json" -d "{\"cpf\": 99988877766, \"nome\": \"Aluno Teste\", \"login\": \"alunotest\", \"senha\": \"1\"}"
+
+--- CREATE ---
+curl -X POST http://localhost:8081/estudante -H "Content-Type: application/json" -d "{\"mat_estudante\": \"T001\", \"usuario\": {\"cpf\": 99988877766}, \"MC\": 8.5, \"ano_ingresso\": 2025}"
+
+--- READ todos ---
+curl http://localhost:8081/estudante
+
+--- READ por id ---
+curl http://localhost:8081/estudante/T001
+
+--- UPDATE (MC - DECIMAL(2) arredonda) ---
+curl -X PUT http://localhost:8081/estudante/T001 -H "Content-Type: application/json" -d "{\"MC\": 9.0}"
+curl http://localhost:8081/estudante/T001
+
+--- DELETE ---
+curl -X DELETE http://localhost:8081/estudante/T001
+
+--- HANDLER 404 ---
+curl http://localhost:8081/estudante/ZZZ999
+
+--- HANDLER (FK usuario inexistente) ---
+curl -X POST http://localhost:8081/estudante -H "Content-Type: application/json" -d "{\"mat_estudante\": \"T002\", \"usuario\": {\"cpf\": 10000000000}, \"MC\": 7.0, \"ano_ingresso\": 2025}"
+
+
+########################  VINCULO  ########################
+# status = Ativo/Cancelada/Formando/Graduado
+
+--- confere matriculas reais ---
+curl http://localhost:8081/estudante
+
+--- CREATE ---
+curl -X POST http://localhost:8081/vinculos -H "Content-Type: application/json" -d "{\"estudante\": {\"mat_estudante\": \"E101\"}, \"curso\": {\"idCurso\": 1}, \"dataEntrada\": \"2025-01-01\", \"status\": \"Ativo\"}"
+
+--- READ todos ---
+curl http://localhost:8081/vinculos
+
+--- READ por id (ajuste) ---
+curl http://localhost:8081/vinculos/14
+
+--- UPDATE status (enum via cast - o que mais quebrava) ---
+curl -X PUT http://localhost:8081/vinculos/14 -H "Content-Type: application/json" -d "{\"status\": \"Cancelada\"}"
+curl http://localhost:8081/vinculos/14
+
+--- UPDATE data de saida ---
+curl -X PUT http://localhost:8081/vinculos/14 -H "Content-Type: application/json" -d "{\"dataSaida\": \"2025-12-15\"}"
+curl http://localhost:8081/vinculos/14
+
+--- DELETE ---
+curl -X DELETE http://localhost:8081/vinculos/14
+
+--- HANDLER 404 ---
+curl http://localhost:8081/vinculos/9999
+
+--- HANDLER (FK estudante inexistente) ---
+curl -X POST http://localhost:8081/vinculos -H "Content-Type: application/json" -d "{\"estudante\": {\"mat_estudante\": \"NAOEXISTE\"}, \"curso\": {\"idCurso\": 1}, \"dataEntrada\": \"2025-01-01\", \"status\": \"Ativo\"}"
+
+--- HANDLER (campo obrigatorio faltando) ---
+curl -X POST http://localhost:8081/vinculos -H "Content-Type: application/json" -d "{\"dataEntrada\": \"2025-01-01\", \"status\": \"Ativo\"}"
+
+--- HANDLER (status invalido - banco rejeita) ---
+curl -X POST http://localhost:8081/vinculos -H "Content-Type: application/json" -d "{\"estudante\": {\"mat_estudante\": \"E101\"}, \"curso\": {\"idCurso\": 1}, \"dataEntrada\": \"2025-01-01\", \"status\": \"ValorErrado\"}"
+
+
+================================================================
+HANDLERS ACIONADOS:
+- 404 NotFound ........... GET/DELETE de id inexistente
+- 409 DadosDuplicado ..... login repetido, combinacao curso repetida
+- 400 Bean Validation .... campo obrigatorio faltando, nome vazio
+- 400 JSON malformado .... JSON esbagaço
+- 400/integridade ....... enum/status invalido (cast), FK inexistente
+================================================================
